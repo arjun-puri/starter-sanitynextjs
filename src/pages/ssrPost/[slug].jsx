@@ -5,11 +5,10 @@ import { readToken } from '~/lib/sanity.api'
 import { getClient } from '~/lib/sanity.client'
 import {
   getPost,
-  postBySlugQuery,
 } from '~/lib/sanity.queries'
 import { formatDate } from '~/utils'
 
-export async function getServerSideProps({ draftMode = false, params = {} }) {
+export const getServerSideProps = process.env.SKIP_SSR ? undefined : async function ({ draftMode = false, params = {} }) {
   const client = getClient(draftMode ? { token: readToken } : undefined)
   const post = await getPost(client, params.slug)
 
@@ -35,11 +34,11 @@ export default function ProjectSlugRoute(props) {
     <Container>
       <section className="post">
         <div className="post__container">
-          <h1 className="post__title">{post.title}</h1>
-          <p className="post__excerpt">{post.excerpt}</p>
-          <p className="post__date">{formatDate(post._createdAt)}</p>
+          <h1 className="post__title">{post?.title}</h1>
+          <p className="post__excerpt">{post?.excerpt}</p>
+          <p className="post__date">{formatDate(post?._createdAt)}</p>
           <div className="post__content">
-            <PortableText value={post.body} />
+            <PortableText value={post?.body} />
           </div>
         </div>
       </section>

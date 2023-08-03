@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "buildAndExport": "next build && next export",
+    "buildAndExport": "SKIP_SSR=1 next build && next export",
     "dev": "next",
     "format": "npx prettier --write . --ignore-path .gitignore",
     "lint": "next lint -- --ignore-path .gitignore",
